@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Forever waving Hello & Kanxu Mayalu</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================
+   CORE VARIABLES & RESET
+   ========================================= */
+:root {
+  --bg1:#090a12;
+  --bg2:#120b2e;
+  --bg3:#061d24;
+  --fg:#f1f2ff;
+  --muted:#9aa0c7;
+  --accent1:#7b8cff;
+  --accent2:#3ef0c8;
+  --accent3:#ff9bd4;
+}
+
+*{box-sizing:border-box;}
+
+html, body {
+  margin:0;
+  height:100%;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Inter,system-ui,sans-serif;
+  color:var(--fg);
+}
+
+/* =========================================
+   VIEW 1: INTRO (CARD) STYLES
+   ========================================= */
+body.view-intro {
+  background:
+    radial-gradient(900px 600px at 10% 10%, #1a1442 0%, transparent 40%),
+    radial-gradient(800px 700px at 90% 80%, #0c3a3f 0%, transparent 45%),
+    linear-gradient(160deg,var(--bg1),var(--bg2),var(--bg3));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+#intro-scene {
+  position:relative;
+  width:100%;
+  max-width:420px;
+  height:100%;
+  padding:env(safe-area-inset-top) 18px env(safe-area-inset-bottom);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: opacity 1s ease;
+}
+
+.card {
+  width:100%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.09),rgba(255,255,255,0.02));
+  backdrop-filter:blur(14px);
+  border-radius:22px;
+  padding:30px 22px 34px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.55);
+  text-align:center;
+  transition:transform 0.4s ease;
+}
+
+.narrator {
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:18px;
+  opacity:0;
+  animation:fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn{ to{opacity:1;} }
+
+.text-area {
+  position:relative;
+  height:90px;
+  margin:20px 0;
+}
+
+.line {
+  position:absolute;
+  inset:0;
+  font-size:17px;
+  line-height:1.6;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+
+.line.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+.unlock {
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+}
+
+.dot {
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 30%, var(--accent2), transparent 60%),
+    radial-gradient(circle at 70% 70%, var(--accent3), transparent 60%),
+    linear-gradient(135deg, var(--accent1), #5a5fff);
+  animation:pulse 2.6s infinite;
+  cursor: pointer;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(123,140,255,.5);}
+  70%{box-shadow:0 0 0 18px rgba(123,140,255,0);}
+  100%{box-shadow:0 0 0 0 rgba(123,140,255,0);}
+}
+
+.easter {
+  margin-top:24px;
+  font-size:13px;
+  color:var(--muted);
+  opacity:0;
+  transition:opacity 1s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.easter.visible { opacity:1; }
+
+.easter a {
+  color:var(--accent2);
+  text-decoration:none;
+}
+
+.enter-btn {
+  background: linear-gradient(135deg, var(--accent3), #ff6b6b);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+  animation: pulse 2s infinite;
+}
+
+/* =========================================
+   VIEW 2: MAIN SITE (KANXU) STYLES
+   ========================================= */
+body.view-main {
+  font-family: 'Quicksand', sans-serif;
+  background: url('https://i.ibb.co/GvxfFMGC/piku.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff0f5;
+  display: block; /* Override flex from view-intro */
+  overflow-y: auto;
+}
+
+#main-scene {
+  display: none; /* Hidden initially */
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+/* Floating stars for View 2 */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite ease-in-out;
+  pointer-events: none;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+header {
+  text-align: center;
+  padding: 60px 20px 30px;
+  background: rgba(0, 0, 0, 0.4);
+}
+header h1 {
+  font-size: 3.5em;
+  font-family: 'Dancing Script', cursive;
+  color: #ffdde4;
+  margin: 0;
+}
+header p {
+  font-size: 1.4em;
+  color: #ffe3ec;
+  margin-top: 10px;
+}
+nav {
+  text-align: center;
+  margin: 20px;
+}
+nav button {
+  background: #ffc2d1;
+  color: #7c0a26;
+  border: none;
+  padding: 14px 25px;
+  margin: 10px;
+  border-radius: 30px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+nav button:hover {
+  background: #ff89a9;
+  color: white;
+}
+
+section {
+  display: none;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  max-width: 850px;
+  margin: 30px auto;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+section.active { display: block; }
+section p {
+  font-size: 1.3em;
+  line-height: 1.8em;
+  text-align: center;
+  color: #fffafc;
+}
+
+#feelings { background: url('https://cdn.create.vista.com/api/media/small/240655010/stock-photo-valentine-day-greeting-card-red-rose-flowers-bouquet-stone-background') no-repeat center; background-size: cover; }
+#future { background: url('https://i.pinimg.com/originals/77/96/bf/7796bf005faeb7f86cc7617f9c6ef70c.jpg') no-repeat center; background-size: cover; }
+#promise { background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba') no-repeat center; background-size: cover; }
+
+.memories {
+  text-align: center;
+  padding: 50px 20px;
+  background: rgba(0, 0, 0, 0.4);
+}
+.memories h2 {
+  font-size: 2em;
+  margin-bottom: 30px;
+  font-family: 'Dancing Script', cursive;
+  color: #ffe3ec;
+}
+.photo-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+.photo-card {
+  width: 160px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  position: relative;
+}
+.photo-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 105, 180, 0.9);
+}
+.photo-thumb {
+  background-size: cover;
+  background-position: center;
+  height: 120px;
+  border-bottom: 2px solid rgba(255, 182, 193, 0.5);
+  position: relative;
+}
+.caption {
+  padding: 10px;
+  font-weight: 600;
+  font-size: 1em;
+  line-height: 1.3em;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.popup-container {
+  position: relative;
+  margin: 30px auto;
+  text-align: center;
+}
+.option {
+  margin: 30px auto;
+  background: #222256;
+  border: 1px solid #ffd3e0;
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 90%;
+  text-align: center;
+}
+.option button {
+  background: #ff99cc;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 1em;
+  margin: 10px;
+  color: #1a1a40;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.option button:hover { background: #ff66b2; }
+
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+#popupStars {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+}
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30, 30, 47, 0.95);
+  padding: 40px;
+  border: 2px solid #ffaad4;
+  border-radius: 15px;
+  z-index: 20;
+  width: 90%;
+  max-width: 600px;
+  color: #fffafc;
+  text-align: center;
+}
+.popup h2 { color: #ffaad4; }
+.popup p { font-size: 1.1em; margin-bottom: 20px; }
+.popup .inner-btn {
+  background: #ffd3e0;
+  color: #1a1a40;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  margin: 5px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header h1 { font-size: 2.5em; }
+  nav button { font-size: 1em; padding: 12px 20px; }
+  section { padding: 20px; }
+  .memories h2 { font-size: 1.8em; }
+  .photo-card { width: 140px; }
+  .photo-thumb { height: 100px; }
+  .popup { padding: 20px; }
+}
+</style>
+</head>
+
+<body class="view-intro">
+
+<div class="scene" id="intro-scene">
+  <div class="card" id="card">
+
+    <div class="narrator">
+      Somewhere between a pause and a thought…<br/>
+      something waits to be tapped.
+    </div>
+
+    <div class="text-area">
+      <div class="line">Hi Kanxi,</div>
+      <div class="line">Since it’s Valentine’s Day, I feel like sending a small hello and wishing you a good day.</div>
+      <div class="line">I hope you’ve been well. It's just a kind thought sent your way.</div>
+      <div class="line">Take care!</div>
+      <div class="line">आज भ्यालेन्टाइनको दिनमा, म तिमीलाई प्रेम गर्न चाहन्छु 💖,</div>
+      <div class="line">तिमी मेरो जीवनको धडकन हौ, यसलाई अँगाल्न चाहन्छु 🫶।</div>
+      <div class="line">तिमीलाई देख्दा, मन ढल्किन्छ खुशीले,</div>
+      <div class="line">तिमी बिना, मायाको मार्ग काँचो हुन्छ,</div>
+      <div class="line">तर तिमी आएपछि, मेरो संसारमा रौनक बन्छ ।</div>
+      <div class="line">तिमी मेरो हर्ष, मेरो शान्ति, मेरो हो,</div>
+      <div class="line">सपना साकार हुन्छ, तिमी सँगै जीवनको छायाँ मेरो हो 🌹।</div>
+      <div class="line">I just added the reel below because caption tells to send it to you, and why not but never mind 😌</div>
+    </div>
+
+    <div class="unlock">
+      <div class="dot" id="dot"></div>
+    </div>
+
+    <div class="easter" id="easter">
+      Some doors only open if you’re curious enough.<br/>
+      <button class="enter-btn" onclick="startFullExperience()">Enter Our World 🌹</button>
+      <a href="https://www.facebook.com/share/r/1DuzFEvQVX/?mibextid=wwXIfr" target="_blank" style="font-size:11px; opacity:0.7; margin-top:5px;">(or just peek at the reel)</a>
+    </div>
+
+  </div>
+</div>
+
+<div id="main-scene">
+  
+  <header>
+    <h1>Kanxu Mayalu Priyasi 🌸</h1>
+    <p>Mero maya, yo samjhana, jindagi — timilai samarpit! 💌</p>
+  </header>
+  
+  <nav>
+    <button onclick="showSection('feelings')">🫀 Mero Bhawana</button>
+    <button onclick="showSection('future')">🌈 Saath & Sapana</button>
+    <button onclick="showSection('promise')">🤝 Mero Pratigya</button>
+    <button onclick="showSection('memories')">🧸 Timro Samjhana</button>
+  </nav>
+
+  <section id="feelings" class="active">
+    <p>
+     Kanxu, sabai jasto bhayera ni, ma ta arkai ho, mero hridaya timro ananta maya le ujiyeko chha.
+     Timro mithi muskaan ra pyar ko sparsh le mero jiwan ko har kona chamkilo ujelo ho, timro boli sunna pauda ni mero aatma madhur sangeet bajdai jancha.
+     Timi mero dhadkan ko sur ho, mero harpal hau; timro yaad har pal mero manma naachne mitho ko jhankaar jasto gunjchha.
+     Aba yo mutu, timro anupam prem bina aru le chhune sakcha ra? Haina, yo mutu sirf timro naam ma, timro pyar ma anant rup ma beat garcha
+     💘
+    </p>
+  </section>
+  
+  <section id="future">
+    <p>
+     जिन्दगी आफ्नै लयमा हिँड्छ, तर तिमी मेरो गीतमा मिठास थपिदिने स्वर हौ।
+     तिम्रो माया र हाँसोले अँध्यारोलाई उज्यालोको स्पर्श दिन्छ।
+     मेरो मन भन्छ, "यो माया, यो बन्धन—अनौठो र अनमोल छ।"
+     हरेक क्षणमा तिम्रो साथले जीवनलाई अनंत संगीतमा बदलिदिन्छ।
+     साथ अनि सपना—हाम्रो प्रेमको रमाइलो यात्रा, जसमा प्रत्येक धड्कनले गीत सुनाउँछ 🎶
+    </p>
+  </section>
+  
+  <section id="promise">
+    <p>
+     कान्छु, तिम्रो मधुर मुस्कान मेरो जीवनको उज्यालो हो।
+     म तिमीलाई वचन गर्दछु: जब तिमी दु:खी हुन्छौ, म सदैव तिम्रो साथमा हुनेछु;
+     जब तिमी हर्षित हुन्छौ, तिम्रो हाँसोले मेरो मनलाई मधुर गीत बनाउनेछ।
+     तिम्रा आखाँको चमकले मेरो माया सदैव उजागर रहोस्।
+     यो अद्भुत बन्धन सधैं तिम्रो सुख, शान्ति र आशासँग अटुट रहोस्। 
+    </p>
+  </section>
+
+  <section id="memories" class="memories">
+    <h2>Please share something memorable for each section 🫶</h2>
+    <div class="photo-gallery">
+      <a href="https://photos.app.goo.gl/iD5EtPh5rm1XMzMt9" class="photo-card" target="_blank">
+        <div class="photo-thumb" style="background-image:url('https://placehold.co/150x110/FEE3EC/000000?text=Magic+Start');"></div>
+        <div class="caption">🌹</div>
+      </a>
+      <a href="https://photos.app.goo.gl/8jaqSEwpibPCwBSV8" class="photo-card" target="_blank">
+        <div class="photo-thumb" style="background-image:url('https://placehold.co/150x110/FFC0CB/000000?text=Smiles+Together');"></div>
+        <div class="caption">💖</div>
+      </a>
+      <a href="https://photos.app.goo.gl/v7sauuUb3A2trmF88" class="photo-card" target="_blank">
+        <div class="photo-thumb" style="background-image:url('https://placehold.co/150x110/FFD1DC/000000?text=Lovely+Maya');"></div>
+        <div class="caption">❤️</div>
+      </a>
+      <a href="https://photos.app.goo.gl/fLCmU8hFnd3DFR8cA" class="photo-card" target="_blank">
+        <div class="photo-thumb" style="background-image:url('https://placehold.co/150x110/FFC6D0/000000?text=Golden+Moment');"></div>
+        <div class="caption">💓</div>
+      </a>
+      <a href="https://photos.app.goo.gl/gGnukBWDP7aKvmXu5" class="photo-card" target="_blank">
+        <div class="photo-thumb" style="background-image:url('https://placehold.co/150x110/FDE2E4/000000?text=Forever+Feels');"></div>
+        <div class="caption">🧸</div>
+      </a>
+    </div>
+  </section>
+
+  <div class="popup-container">
+    <div class="option">
+      <button onclick="showPopup('stars')">🌠 Timi Ra Tara</button>
+      <button onclick="showPopup('silence')">🌌 Saanjh Ko Shanta Prem</button>
+      <button onclick="showPopup('dream')">🌙 Sapana Ma Timro Muskan</button>
+    </div>
+  </div>
+
+  <div class="popup-overlay" id="overlay" onclick="closeAllPopups()">
+    <div id="popupStars"></div>
+  </div>
+
+  <div class="popup" id="stars">
+    <h2>🌠 Timi Ra Tara</h2>
+    <p>
+      Jun tara ma timilai herchu... jun aakash ma timi jastai muskan cha...<br>
+      Tyo sanjh ma, ma timilai herirahe jasto lagcha. Timi mero aatma sanga kura garirahichau jasto lagcha 💫
+    </p>
+    <button class="inner-btn" onclick="alert('Timi ma bhanda pani sundar chau, mero sansar ko sabai bhanda ujjyalo tara ✨')">Timi Mero Tara</button>
+    <button class="inner-btn" onclick="alert('Ma herirahanchu tyo akash, jaha timi huna sakchau...')">Herne Aankha</button>
+  </div>
+
+  <div class="popup" id="silence">
+    <h2>🌌 Saanjh Ko Shanta Prem</h2>
+    <p>
+      Jun bela hawa le timro yaad liyaunchha, ma nistabdh bhayera timro naam samjanchu.<br>
+      Ma timro maya bhitra harauchhu, bina sabda, bina abaaj... tara purai aatma sanga.
+    </p>
+    <button class="inner-btn" onclick="alert('Tyo sanjh, jaba timi sangai thiyeu... sabda nai theenan.')">Saanjh Timi Sanga</button>
+    <button class="inner-btn" onclick="alert('Shabda haru bhanda ni gahiro cha mero maya')">Mero Chuppi Maya</button>
+  </div>
+
+  <div class="popup" id="dream">
+    <h2>🌙 Sapana Ma Timro Muskan</h2>
+    <p>
+      Ma sapana bhitra timro aawaz sunnu... timro haasoko gungunahat... mero man heri heri ramauchha 💭<br>
+      Tyo sapana ma timi hath samathi rahanchau... ra ma timro aankhama harsa herirahanchu.
+    </p>
+    <button class="inner-btn" onclick="alert('Ma timi sanga sapana matra ma hoina, yathartha ma pani huna chaahanchu 🫶')">Yathartha Sapana</button>
+    <button class="inner-btn" onclick="alert('Timi meri sapana matra ho ki sachai ho, jasko maya yo mutu le khatir cha')">Timi Real Chau?</button>
+  </div>
+
+</div>
+
+<script>
+  /* --- PART 1: INTRO CARD LOGIC --- */
+  const lines = document.querySelectorAll('.line');
+  const dot = document.getElementById('dot');
+  const easter = document.getElementById('easter');
+  let index = 0;
+
+  dot.addEventListener('click', () => {
+    if(index < lines.length){
+      if(index > 0){
+        lines[index-1].classList.remove('visible');
+      }
+      lines[index].classList.add('visible');
+      index++;
+      if(index === lines.length){
+        setTimeout(() => easter.classList.add('visible'), 800);
+      }
+    }
+  });
+
+  /* --- PART 2: TRANSITION & MAIN SITE LOGIC --- */
+  
+  function startFullExperience() {
+    const introScene = document.getElementById('intro-scene');
+    const mainScene = document.getElementById('main-scene');
+    
+    // 1. Fade out intro
+    introScene.style.opacity = '0';
+    
+    setTimeout(() => {
+      // 2. Hide intro, Switch body class
+      introScene.style.display = 'none';
+      document.body.classList.remove('view-intro');
+      document.body.classList.add('view-main');
+      
+      // 3. Start Main Stars
+      generateMainStars();
+      
+      // 4. Show Main Scene
+      mainScene.style.display = 'block';
+      setTimeout(() => {
+        mainScene.style.opacity = '1';
+      }, 50);
+      
+    }, 1000);
+  }
+
+  // Generate stars for the main background
+  function generateMainStars() {
+    // We attach these to the body now
+    for (let i = 0; i < 100; i++) {
+      let star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      document.body.appendChild(star);
+    }
+  }
+
+  // Section Switching
+  function showSection(id) {
+    document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  // Popup Logic
+  function generatePopupStars() {
+    const container = document.getElementById('popupStars');
+    container.innerHTML = "";
+    for (let i = 0; i < 100; i++) {
+      let star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      container.appendChild(star);
+    }
+  }
+
+  function showPopup(id) {
+    closeAllPopups();
+    document.getElementById('overlay').style.display = 'block';
+    generatePopupStars();
+    document.getElementById(id).style.display = 'block';
+  }
+
+  function closeAllPopups() {
+    document.getElementById('overlay').style.display = 'none';
+    document.querySelectorAll('.popup').forEach(p => p.style.display = 'none');
+  }
+</script>
+
+</body>
+</html>
